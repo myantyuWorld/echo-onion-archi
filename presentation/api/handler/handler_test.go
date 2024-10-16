@@ -47,6 +47,7 @@ func NewMockHandlersDependency(ctrl *gomock.Controller, options ...MockHandlersD
 	hd := &router.HandlerDependencies{
 		AuthHandler:    handler.NewAuthHandler(mocks.NewMockAuthUsecase(ctrl), &config.AppConfig{}),
 		ProfileHandler: handler.NewProfileHandler(mocks.NewMockProfileUsecase(ctrl)),
+		BookHandler:    handler.NewBookHandler(mocks.NewMockBookUsecase(ctrl)),
 	}
 
 	for _, option := range options {
@@ -64,5 +65,11 @@ func SetAuthHandler(h handler.AuthHandler) MockHandlersDependencyOptionFunc {
 func SetProfileHandler(h handler.ProfileHandler) MockHandlersDependencyOptionFunc {
 	return func(hd *router.HandlerDependencies) {
 		hd.ProfileHandler = h
+	}
+}
+
+func SetBookHandler(h handler.BookHandler) MockHandlersDependencyOptionFunc {
+	return func(hd *router.HandlerDependencies) {
+		hd.BookHandler = h
 	}
 }

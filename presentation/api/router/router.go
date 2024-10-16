@@ -14,6 +14,7 @@ import (
 type HandlerDependencies struct {
 	AuthHandler    handler.AuthHandler
 	ProfileHandler handler.ProfileHandler
+	BookHandler    handler.BookHandler
 }
 
 func NewRouter(e *echo.Echo, deps *HandlerDependencies, config config.AppConfig) {
@@ -45,4 +46,8 @@ func NewRouter(e *echo.Echo, deps *HandlerDependencies, config config.AppConfig)
 	p.Use(middleware.AuthMiddleware(config.JWTSecret))
 	p.GET("", deps.ProfileHandler.GetProfile)
 	p.GET("/all", deps.ProfileHandler.GetAllProfiles)
+
+	b := e.Group("/books")
+	b.Use(middleware.AuthMiddleware(config.JWTSecret))
+	b.POST("", deps.BookHandler.CreateBook)
 }
