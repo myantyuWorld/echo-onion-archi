@@ -6,6 +6,7 @@ const (
 	ErrBadReqeust ErrorCode = iota
 	ErrNotFound
 	ErrUnauthorized
+	ErrForbidden
 	ErrInternalError
 )
 
@@ -17,6 +18,8 @@ func (e ErrorCode) String() string {
 		return "NotFound"
 	case ErrUnauthorized:
 		return "Unauthorized"
+	case ErrForbidden:
+		return "Forbidden"
 	case ErrInternalError:
 		return "InternalServerError"
 	default:

@@ -5,9 +5,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/sakaguchi-0725/echo-onion-arch/application/usecase"
-	"github.com/sakaguchi-0725/echo-onion-arch/config"
 	"github.com/sakaguchi-0725/echo-onion-arch/infra/db"
 	"github.com/sakaguchi-0725/echo-onion-arch/infra/persistence"
+	"github.com/sakaguchi-0725/echo-onion-arch/pkg/config"
 	"github.com/sakaguchi-0725/echo-onion-arch/presentation/api/handler"
 	"github.com/sakaguchi-0725/echo-onion-arch/presentation/api/router"
 )
@@ -25,13 +25,16 @@ func main() {
 	profileRepo := persistence.NewProfileRepository(db)
 
 	authUsecase := usecase.NewAuthUsecase(userRepo, profileRepo)
+	profileUsecase := usecase.NewProfileUsecase(profileRepo)
 
 	authHandler := handler.NewAuthHandler(authUsecase, cfg.App)
+	profileHandler := handler.NewProfileHandler(profileUsecase)
 
 	deps := &router.HandlerDependencies{
-		AuthHandler: authHandler,
+		AuthHandler:    authHandler,
+		ProfileHandler: profileHandler,
 	}
 
-	router.NewRouter(e, deps)
+	router.NewRouter(e, deps, *cfg.App)
 	e.Start(":8080")
 }
