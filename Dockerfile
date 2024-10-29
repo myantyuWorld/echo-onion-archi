@@ -13,4 +13,5 @@ RUN go install github.com/golang/mock/mockgen@v1.6.0
 
 RUN go mod download
 
-CMD ["air", "-c", ".air.toml"]
+# CMD ["air", "-c", ".air.toml"]
+CMD ["go", "run", "cmd/api/main.go"]

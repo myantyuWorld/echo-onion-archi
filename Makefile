@@ -4,5 +4,7 @@ down:
 	docker-compose down
 build:
 	docker-compose up --build
-exec-api:
+api:
 	docker-compose exec api /bin/bash
+ps:
+	docker ps
