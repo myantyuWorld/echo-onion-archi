@@ -7,7 +7,6 @@ import (
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
 	"github.com/sakaguchi-0725/echo-onion-arch/presentation/api/handler"
 	"github.com/sakaguchi-0725/echo-onion-arch/presentation/api/validator"
-	"github.com/sakaguchi-0725/echo-onion-arch/presentation/middleware"
 )
 
 type HandlerDependencies struct {
@@ -23,14 +22,16 @@ func NewRouter(e *echo.Echo, deps *HandlerDependencies) {
 			echo.HeaderAccessControlAllowHeaders, echo.HeaderXCSRFToken},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
-	e.Use(echoMiddleware.CSRFWithConfig(echoMiddleware.CSRFConfig{
-		TokenLookup:    "header:X-CSRF-Token",
-		CookieName:     "csrf_token",
-		CookiePath:     "/",
-		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode, // デプロイ時はhttp.SamesiteStrictMode
-	}))
-	e.Use(middleware.ErrorMiddleware())
+
+	// TODO : 後ほど対応する
+	// e.Use(echoMiddleware.CSRFWithConfig(echoMiddleware.CSRFConfig{
+	// 	TokenLookup:    "header:X-CSRF-Token",
+	// 	CookieName:     "csrf_token",
+	// 	CookiePath:     "/",
+	// 	CookieHTTPOnly: true,
+	// 	CookieSameSite: http.SameSiteNoneMode, // デプロイ時はhttp.SamesiteStrictMode
+	// }))
+	// e.Use(middleware.ErrorMiddleware())
 
 	e.GET("/csrf-token", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{"message": "CSRF token set"})
