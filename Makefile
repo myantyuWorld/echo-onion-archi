@@ -1,5 +1,5 @@
 up:
-	docker-compose up
+	docker-compose up -d
 down:
 	docker-compose down
 build:
@@ -14,3 +14,7 @@ db:
 	docker-compose exec db /bin/bash
 ps:
 	docker ps
+logs:
+	docker compose logs -f --tail=100
+api-log:
+	docker compose logs -f --tail=100 api

@@ -11,7 +11,10 @@ services:
       - ./:/go/src/app
     tty: true
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      test_db:
+        condition: service_healthy
   db:
     image: postgres:16
     restart: always
