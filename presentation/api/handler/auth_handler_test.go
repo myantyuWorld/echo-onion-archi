@@ -53,7 +53,7 @@ func TestAuthHandler_SignIn_Success(t *testing.T) {
 	reqBody, err := json.Marshal(signInRequest)
 	require.NoError(t, err)
 
-	rec, req := test.SetupRequest(e, http.MethodPost, "/signin", string(reqBody))
+	rec, req := test.SetupRequest(e, http.MethodPost, "/normal/login", string(reqBody))
 
 	authUsecase.EXPECT().SignIn(email, password).Return(expectedUserID, nil)
 
@@ -77,7 +77,7 @@ func TestAuthHandler_SignIn_BadRequest(t *testing.T) {
 	reqBody, err := json.Marshal(signInRequest)
 	require.NoError(t, err)
 
-	rec, req := test.SetupRequest(e, http.MethodPost, "/signin", string(reqBody))
+	rec, req := test.SetupRequest(e, http.MethodPost, "/normal/login", string(reqBody))
 
 	e.ServeHTTP(rec, req)
 
@@ -103,7 +103,7 @@ func TestAuthHandler_SignIn_Unauhorized(t *testing.T) {
 	reqBody, err := json.Marshal(signInReqest)
 	require.NoError(t, err)
 
-	rec, req := test.SetupRequest(e, http.MethodPost, "/signin", string(reqBody))
+	rec, req := test.SetupRequest(e, http.MethodPost, "/normal/login", string(reqBody))
 
 	authUsecase.EXPECT().SignIn(email, password).Return(model.UserID(""), apperr.NewApplicationError(apperr.ErrUnauthorized, "Authentication failed. Please check your email and password.", errors.New("error")))
 	e.ServeHTTP(rec, req)

@@ -35,7 +35,7 @@ func NewRouter(e *echo.Echo, deps *HandlerDependencies) {
 	e.GET("/csrf-token", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{"message": "CSRF token set"})
 	})
-	e.POST("/signin", deps.AuthHandler.SignIn)
+	e.POST("/normal/login", deps.AuthHandler.SignIn)
 	e.POST("/signup", deps.AuthHandler.SignUpForGeneral)
 	e.POST("/signup/admin", deps.AuthHandler.SignUpForAdmin)
 }
