@@ -6,7 +6,7 @@ type ShoppingCategory string
 
 const (
 	FoodCost  ShoppingCategory = "food"
-	Commodity ShoppingCategory = "commodity"
+	Commodity ShoppingCategory = "necessity"
 )
 
 func NewShoppingCategory(s string) (ShoppingCategory, error) {
