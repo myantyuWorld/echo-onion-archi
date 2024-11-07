@@ -35,7 +35,7 @@ func (m *MockShoppingItemRepository) EXPECT() *MockShoppingItemRepositoryMockRec
 }
 
 // Delete mocks base method.
-func (m *MockShoppingItemRepository) Delete(userID model.UserID, itemID string) error {
+func (m *MockShoppingItemRepository) Delete(userID model.UserID, itemID int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", userID, itemID)
 	ret0, _ := ret[0].(error)
