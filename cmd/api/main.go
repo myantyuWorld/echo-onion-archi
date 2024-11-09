@@ -23,13 +23,17 @@ func main() {
 
 	userRepo := persistence.NewUserRepository(db)
 	profileRepo := persistence.NewProfileRepository(db)
+	shoppingRepo := persistence.NewShoppingItemRepository(db)
 
 	authUsecase := usecase.NewAuthUsecase(userRepo, profileRepo)
+	shoppingUsecase := usecase.NewShoppingItemUsecase(shoppingRepo)
 
 	authHandler := handler.NewAuthHandler(authUsecase, cfg.App)
+	shoppingHandler := handler.NewShoppingHandler(shoppingUsecase)
 
 	deps := &router.HandlerDependencies{
-		AuthHandler: authHandler,
+		AuthHandler:     authHandler,
+		ShoppingHandler: shoppingHandler,
 	}
 
 	router.NewRouter(e, deps)

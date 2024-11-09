@@ -1,14 +1,14 @@
 package model
 
 type ShoppingItem struct {
-	ID       uint
+	ID       int
 	OwnerID  UserID
 	Category ShoppingCategory
 	Name     ShoppingName
 	Picked   bool
 }
 
-func NewShoppingItem(id uint, ownerID UserID, category string, name string) (*ShoppingItem, error) {
+func NewShoppingItem(ownerID UserID, category string, name string) (*ShoppingItem, error) {
 	categoryValueObject, err := NewShoppingCategory(category)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,6 @@ func NewShoppingItem(id uint, ownerID UserID, category string, name string) (*Sh
 	}
 
 	return &ShoppingItem{
-		ID:       id,
 		OwnerID:  ownerID,
 		Category: categoryValueObject,
 		Name:     nameValueObject,
@@ -27,7 +26,7 @@ func NewShoppingItem(id uint, ownerID UserID, category string, name string) (*Sh
 	}, nil
 }
 
-func ReCreate(id uint, ownerID UserID, category string, name string, picked bool) *ShoppingItem {
+func ReCreateShoppingItem(id int, ownerID UserID, category string, name string, picked bool) *ShoppingItem {
 	categoryValueObject, _ := NewShoppingCategory(category)
 	nameValueObject, _ := NewShoppingName(name)
 

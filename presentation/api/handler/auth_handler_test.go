@@ -24,10 +24,13 @@ func setupAuthHandler(t *testing.T) (*mocks.MockAuthUsecase, *echo.Echo) {
 	ctrl := gomock.NewController(t)
 	authUsecase := mocks.NewMockAuthUsecase(ctrl)
 	authHandler := handler.NewAuthHandler(authUsecase, config.NewConfig().App)
+	shoppingUsecase := mocks.NewMockShoppingItemUsecase(ctrl)
+	shoppingHandler := handler.NewShoppingHandler(shoppingUsecase)
 
 	e := echo.New()
 	deps := router.HandlerDependencies{
-		AuthHandler: authHandler,
+		AuthHandler:     authHandler,
+		ShoppingHandler: shoppingHandler,
 	}
 	router.NewRouter(e, &deps)
 
