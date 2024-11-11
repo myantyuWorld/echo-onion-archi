@@ -50,7 +50,7 @@ func (a *authHandler) SignIn(c echo.Context) error {
 
 	a.setAuthCookie(c, token)
 
-	return c.JSON(http.StatusOK, map[string]string{"message": "sign in successful"})
+	return c.JSON(http.StatusOK, map[string]string{"userId": userID.String()})
 }
 
 func (a *authHandler) SignUpForAdmin(c echo.Context) error {

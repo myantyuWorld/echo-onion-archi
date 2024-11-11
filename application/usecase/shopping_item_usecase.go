@@ -12,7 +12,7 @@ import (
 type ShoppingItemUsecase interface {
 	FindAll(ctx context.Context, userID string) ([]*domain.ShoppingItem, error)
 	Delete(ctx context.Context, userID string, itemID int) error
-	Create(ctx context.Context, userID string, category string, description string) error
+	Create(ctx context.Context, userID string, category string, description string) (*domain.ShoppingItem, error)
 }
 
 type shoppingUsecase struct {
@@ -20,22 +20,22 @@ type shoppingUsecase struct {
 }
 
 // Create implements ShoppingItemUsecase.
-func (s *shoppingUsecase) Create(ctx context.Context, userID string, category string, description string) error {
+func (s *shoppingUsecase) Create(ctx context.Context, userID string, category string, description string) (*domain.ShoppingItem, error) {
 	domainUserID, err := domain.NewUserID(userID)
 	if err != nil {
-		return apperr.NewApplicationError(apperr.ErrBadReqeust, "", err)
+		return &domain.ShoppingItem{}, apperr.NewApplicationError(apperr.ErrBadReqeust, "", err)
 	}
 
 	newShoppingItem, err := domain.NewShoppingItem(domainUserID, category, description)
 	if err != nil {
-		return apperr.NewApplicationError(apperr.ErrBadReqeust, "", err)
+		return &domain.ShoppingItem{}, apperr.NewApplicationError(apperr.ErrBadReqeust, "", err)
 	}
 
 	err = s.shoppingRepo.Insert(newShoppingItem)
 	if err != nil {
-		return apperr.NewApplicationError(apperr.ErrInternalError, "Failed to shopping item insert", err)
+		return &domain.ShoppingItem{}, apperr.NewApplicationError(apperr.ErrInternalError, "Failed to shopping item insert", err)
 	}
-	return nil
+	return newShoppingItem, nil
 }
 
 // Delete implements ShoppingItemUsecase.

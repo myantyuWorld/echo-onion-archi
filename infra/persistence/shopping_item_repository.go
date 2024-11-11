@@ -71,6 +71,8 @@ func (s *shoppingItem) Insert(v *domain.ShoppingItem) error {
 		return apperr.NewApplicationError(apperr.ErrInternalError, "Failed to insert shopping item", err)
 	}
 
+	v.ID = item.ID
+
 	return nil
 }
 

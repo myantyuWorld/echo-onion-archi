@@ -36,11 +36,12 @@ func (m *MockShoppingItemUsecase) EXPECT() *MockShoppingItemUsecaseMockRecorder 
 }
 
 // Create mocks base method.
-func (m *MockShoppingItemUsecase) Create(ctx context.Context, userID, category, description string) error {
+func (m *MockShoppingItemUsecase) Create(ctx context.Context, userID, category, description string) (*model.ShoppingItem, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, userID, category, description)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*model.ShoppingItem)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.

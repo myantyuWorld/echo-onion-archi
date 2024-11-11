@@ -26,13 +26,13 @@ func NewRouter(e *echo.Echo, deps *HandlerDependencies) {
 	}))
 
 	// TODO : 後ほど対応する
-	e.Use(echoMiddleware.CSRFWithConfig(echoMiddleware.CSRFConfig{
-		TokenLookup:    "header:X-CSRF-Token",
-		CookieName:     "csrf_token",
-		CookiePath:     "/",
-		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode, // デプロイ時はhttp.SamesiteStrictMode
-	}))
+	// e.Use(echoMiddleware.CSRFWithConfig(echoMiddleware.CSRFConfig{
+	// 	TokenLookup:    "header:X-CSRF-Token",
+	// 	CookieName:     "csrf_token",
+	// 	CookiePath:     "/",
+	// 	CookieHTTPOnly: true,
+	// 	CookieSameSite: http.SameSiteNoneMode, // デプロイ時はhttp.SamesiteStrictMode
+	// }))
 	e.Use(middleware.ErrorMiddleware())
 
 	e.GET("/csrf-token", func(c echo.Context) error {
@@ -44,5 +44,5 @@ func NewRouter(e *echo.Echo, deps *HandlerDependencies) {
 
 	e.GET("/shopping/:owner_id", deps.ShoppingHandler.FindAll)
 	e.POST("/shopping/:owner_id", deps.ShoppingHandler.Create)
-	e.POST("/shopping/:owner_id/:item_id", deps.ShoppingHandler.Delete)
+	e.DELETE("/shopping/:owner_id/:item_id", deps.ShoppingHandler.Delete)
 }

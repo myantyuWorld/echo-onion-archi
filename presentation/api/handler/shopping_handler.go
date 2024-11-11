@@ -30,12 +30,16 @@ func (s *shoppingHandler) Create(c echo.Context) error {
 		return apperr.NewApplicationError(apperr.ErrBadReqeust, "invalid input", err)
 	}
 
-	err := s.usecase.Create(c.Request().Context(), req.OwnerID, req.Category, req.Description)
+	item, err := s.usecase.Create(c.Request().Context(), req.OwnerID, req.Category, req.Description)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, map[string]string{"message": "shopping memo create successful"})
+	return c.JSON(http.StatusOK, dto.ShoppingItemCreateResponse{
+		ItemID:      item.ID,
+		Category:    item.Category.String(),
+		Description: item.Name.String(),
+	})
 }
 
 // Delete implements ShoppingHandler.

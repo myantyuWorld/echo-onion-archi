@@ -109,7 +109,7 @@ func TestShoppingItemHandler_Delete_Success(t *testing.T) {
 		ItemID:  1,
 	}
 
-	rec, req := test.SetupRequest(e, http.MethodPost, "/shopping/1/1", "")
+	rec, req := test.SetupRequest(e, http.MethodDelete, "/shopping/1/1", "")
 	usecase.EXPECT().Delete(context.Background(), request.OwnerID, request.ItemID).Return(nil)
 
 	e.ServeHTTP(rec, req)

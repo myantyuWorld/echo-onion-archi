@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE shopping_memos (
+CREATE TABLE shopping_items (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id UUID NOT NULL,
   category VARCHAR(10),
